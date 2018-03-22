@@ -56,7 +56,7 @@ export default class Modal extends React.Component {
     super();
 
     this.state = {
-      isJustClosing: false,
+      isClosing: false,
     }
 
     this.handleClose = this.handleClose.bind(this);
@@ -65,7 +65,7 @@ export default class Modal extends React.Component {
   }
 
   handleClose() {
-    this.setState({ isJustClosing: true })
+    this.setState({ isClosing: true })
   }
 
   submitClick() {
@@ -88,15 +88,15 @@ export default class Modal extends React.Component {
     return (
       <ModalWrapper>
         <ModalContent
-          animation={this.state.isJustClosing ? closeAnimation : openAnimation}
-          onAnimationEnd={this.state.isJustClosing ? closeTrigger : null}
+          animation={this.state.isClosing ? closeAnimation : openAnimation}
+          onAnimationEnd={this.state.isClosing ? closeTrigger : null}
         >
           <Header>{header}</Header>
           {paragraph ? <Paragraph>{paragraph}</Paragraph> : null}
           <ButtonsWrapper>
             {
               cancelAction
-              ? <Button onClick={this.handleClose} >{cancelText}</Button>
+              ? <Button onClick={this.cancelClick} >{cancelText}</Button>
               : null
             }
             <Button autofocus onClick={this.submitClick} >{submitText}</Button>
