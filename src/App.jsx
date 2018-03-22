@@ -39,7 +39,7 @@ class App extends React.Component {
         <input type="text" onChange={this.handleChange} value={value} style={{ marginTop: 50 }} />
         <Button onClick={this.handleClick}>daj hajs i pokaz modal</Button>
         <Button>menuTrigger</Button>
-        {isModal ? <Modal onAnimationEnd={this.toggleModal} header="Bierz te łapy z mojej nogi!" paragraph="Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta in at enim sed. Facere accusantium impedit dolores quas debitis." /> : null}
+        {isModal ? <Modal closeTrigger={this.toggleModal} header="Bierz te łapy z mojej nogi!" paragraph="Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta in at enim sed. Facere accusantium impedit dolores quas debitis." /> : null}
       </div>
     );
   }

@@ -82,14 +82,14 @@ export default class Modal extends React.Component {
 
   render() {
     const {
-      header, paragraph, submitText, cancelText, onAnimationEnd, cancelAction,
+      header, paragraph, submitText, cancelText, closeTrigger, cancelAction,
     } = this.props;
     
     return (
       <ModalWrapper>
         <ModalContent
           animation={this.state.isJustClosing ? closeAnimation : openAnimation}
-          onAnimationEnd={this.state.isJustClosing ? onAnimationEnd : null}
+          onAnimationEnd={this.state.isJustClosing ? closeTrigger : null}
         >
           <Header>{header}</Header>
           {paragraph ? <Paragraph>{paragraph}</Paragraph> : null}
@@ -122,5 +122,5 @@ Modal.propTypes = {
   cancelText: PropTypes.string,
   submitAction: PropTypes.func,
   cancelAction: PropTypes.func,
-  onAnimationEnd: PropTypes.func.isRequired,
+  closeTrigger: PropTypes.func.isRequired,
 };
