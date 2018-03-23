@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
 
-const closeButtonSize = 70;
+const closeButtonSize = 60;
 
 const closeButtonAnimation = keyframes`
   100% { transform: rotate(360deg) }
@@ -15,7 +15,7 @@ const closeIconAnimation = direction => keyframes`
   }
   to { 
     transform: rotate(${direction}45deg); 
-    height: 40px; 
+    height: 25px; 
   }
 `;
 
@@ -24,15 +24,10 @@ const closeIconMouseOutAnimation = keyframes`
 `;
 
 const StyledCloseButton = styled.div`
-  box-sizing: border-box;
   border: solid 2px black;
   border-radius: 50%;
   background: #fff;
   width: ${closeButtonSize}px;
-  height: ${closeButtonSize}px;
-  position: absolute;
-  left: ${props => props.menuSize/2 - closeButtonSize/2}px;
-  top: ${props => props.menuSize/2 - closeButtonSize/2}px;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -69,24 +64,19 @@ const CloseIcon = styled.div`
     }
   }
 
-  ${StyledCloseButton}:not(:hover) & {
+  /* ${StyledCloseButton}:not(:hover) & {
     animation: ${closeIconMouseOutAnimation} 0.5;
     opacity: 1;
-  }
+  } */
 `;
 
 const CloseButton = ({ menuSize, onClick }) => (
-  <StyledCloseButton menuSize={menuSize} onClick={onClick}>
+  <StyledCloseButton onClick={onClick}>
     <CloseIcon />
   </StyledCloseButton>
 );
 
-StyledCloseButton.propTypes = {
-  menuSize: PropTypes.number.isRequired,
-}
-
 CloseButton.propTypes = {
-  menuSize: PropTypes.number.isRequired,
   onCLick: PropTypes.func.isRequired,
 }
 

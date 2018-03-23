@@ -4,7 +4,7 @@ import styled, { keyframes } from 'styled-components';
 
 import CloseButton from './CloseButton';
 
-const menuSize = 240;
+const menuSize = 60;
 
 const menuAnimationOpen = keyframes`
   0% { transform: scale(0, 0); }
@@ -17,15 +17,14 @@ const menuAnimationClose = keyframes`
 `;
 
 const CircleWrapper = styled.div`
-  box-sizing: border-box;
   position: fixed;
   left: ${props => `${props.x - menuSize/2}px`};
   top: ${props => `${props.y - menuSize/2}px`};
   border-radius: 50%;
   width: ${menuSize}px;
   height: ${menuSize}px;
-  /* border: solid 1px black; */
   display: flex;
+
   animation: ${props => props.animation} 0.5s;
 `;
 
