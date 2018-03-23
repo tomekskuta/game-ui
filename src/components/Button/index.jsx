@@ -10,6 +10,7 @@ const StyledButton = styled.button`
   border-radius: 5px;
   outline: none;
   box-shadow: 2px 3px rgba(0, 0, 0, 0.7);
+  cursor: pointer;
 
   :hover {
     background: rgba(0, 0, 0, 0.07);
