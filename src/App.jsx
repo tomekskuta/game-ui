@@ -50,7 +50,6 @@ class App extends React.Component {
         y: e.clientY,
       }
     });
-    console.log(e.clientX)
   }
 
   render() {
