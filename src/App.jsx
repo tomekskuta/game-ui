@@ -46,7 +46,7 @@ class App extends React.Component {
     const { value, isClicked, isModal, isCircleMenu } = this.state;
 
     return (
-      <div className="App">
+      <div className="App" style={{margin: 50}}>
         <ProgressBar resource="Gold" value={isClicked ? Number(value) : 0} maxValue={228} />
         <input type="text" onChange={this.handleChange} value={value} style={{ marginTop: 50 }} />
         <Button onClick={this.handleClick}>daj hajs i pokaz modal</Button>

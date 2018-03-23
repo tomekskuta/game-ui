@@ -2,8 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
 
-const addValueAnimation = keyframes`
-  50% { transform: scale(1.1, 1.1); }
+const updateValueAnimation = keyframes`
+  from { 
+    opacity: 1;
+    transform: translate(90px, 0)
+  }
+  to { 
+    opacity: 0;
+    transform: translate(105px, -25px)
+  }
 `;
 
 const Wrapper = styled.div`
@@ -14,7 +21,14 @@ const ValueWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 3px 5px;
-  animation: ${props => props.animation} 1s;
+  position: relative;
+`;
+
+const DifferenceAnimation = styled.span`
+  position: absolute;
+  animation: ${updateValueAnimation} 2s ease-out;
+  color: ${props => props.children > 0 ? '#81aa42' : '#f31216'};
+  font-weight: 1.3em;
 `;
 
 const BarWrapper = styled.div`
@@ -35,7 +49,7 @@ export default class ProgressBar extends React.Component {
     super();
 
     this.state = {
-      isValueUpdated: false,
+      differenceOfValue: null,
     };
 
     this.handleAnimationEnd = this.handleAnimationEnd.bind(this);
@@ -43,25 +57,30 @@ export default class ProgressBar extends React.Component {
 
   componentWillReceiveProps(nextProp) {
     if (nextProp.value !== this.props.value) {
-      this.setState({ isValueUpdated: true });
+      this.setState({ differenceOfValue: nextProp.value - this.props.value });
     }
   }
 
   handleAnimationEnd() {
-    this.setState({ isValueUpdated: false });
+    this.setState({ differenceOfValue: null });
   }
 
   render() {
     const { resource, value, maxValue } = this.props;
+    const { differenceOfValue } = this.state;
 
     return (
       <Wrapper>
-        <ValueWrapper
-          animation={this.state.isValueUpdated ? addValueAnimation : null}
-          onAnimationEnd={this.handleAnimationEnd}
-        >
+        <ValueWrapper>
           <span>{resource}</span>
           <span>{`${value}/${maxValue}`}</span>
+          {
+            differenceOfValue 
+            ? <DifferenceAnimation onAnimationEnd={this.handleAnimationEnd} >
+                {differenceOfValue < 0 ? differenceOfValue : `+${differenceOfValue}`}
+              </DifferenceAnimation> 
+            : null
+          }
         </ValueWrapper>
         <BarWrapper>
           <Bar barLength={value / maxValue} />
@@ -70,10 +89,6 @@ export default class ProgressBar extends React.Component {
     );
   }
 }
-
-ValueWrapper.propTypes = {
-  animation: PropTypes.string,
-};
 
 Bar.propTypes = {
   barLength: PropTypes.number.isRequired,
