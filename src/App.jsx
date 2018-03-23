@@ -59,10 +59,10 @@ class App extends React.Component {
       <div className="App" style={{margin: 50}}>
         <ProgressBar resource="Gold" value={isClicked ? Number(value) : 0} maxValue={228} />
         <input type="text" onChange={this.handleChange} value={value} style={{ marginTop: 50 }} />
-        <Button onClick={this.handleClick}>daj hajs i pokaz modal</Button>
+        <Button onClick={this.handleClick}>change Bar value and show Modal</Button>
         <MenuTriggerButton onClick={this.toggleCircleMenu}>menuTrigger</MenuTriggerButton>
-        {isCircleMenu ? <CircleMenu x={circleMenuPosition.x} y={circleMenuPosition.y} /> : null}
-        {isModal ? <Modal closeTrigger={this.toggleModal} header="Bierz te łapy z mojej nogi!" paragraph="Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta in at enim sed. Facere accusantium impedit dolores quas debitis." /> : null}
+        {isCircleMenu ? <CircleMenu x={circleMenuPosition.x} y={circleMenuPosition.y} closeMenuHandler={this.toggleCircleMenu} /> : null}
+        {isModal ? <Modal closeTrigger={this.toggleModal} header='Lorem ipsum dolor sit amet consectetur adipisicing elit.' paragraph="Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta in at enim sed. Facere accusantium impedit dolores quas debitis." /> : null}
       </div>
     );
   }
