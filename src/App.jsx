@@ -17,6 +17,10 @@ class App extends React.Component {
       isClicked: false,
       isModal: false,
       isCircleMenu: false,
+      circleMenuPosition: {
+        x: 0,
+        y: 0,
+      }
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -38,12 +42,19 @@ class App extends React.Component {
     this.toggleModal();
   }
 
-  toggleCircleMenu() {
-    this.setState({ isCircleMenu: !this.state.isCircleMenu });
+  toggleCircleMenu(e) {
+    this.setState({ 
+      isCircleMenu: !this.state.isCircleMenu,
+      circleMenuPosition: {
+        x: e.clientX,
+        y: e.clientY,
+      }
+    });
+    console.log(e.clientX)
   }
 
   render() {
-    const { value, isClicked, isModal, isCircleMenu } = this.state;
+    const { value, isClicked, isModal, isCircleMenu, circleMenuPosition } = this.state;
 
     return (
       <div className="App" style={{margin: 50}}>
@@ -51,7 +62,7 @@ class App extends React.Component {
         <input type="text" onChange={this.handleChange} value={value} style={{ marginTop: 50 }} />
         <Button onClick={this.handleClick}>daj hajs i pokaz modal</Button>
         <MenuTriggerButton onClick={this.toggleCircleMenu}>menuTrigger</MenuTriggerButton>
-        {isCircleMenu ? <CircleMenu /> : null}
+        {isCircleMenu ? <CircleMenu x={circleMenuPosition.x} y={circleMenuPosition.y} /> : null}
         {isModal ? <Modal closeTrigger={this.toggleModal} header="Bierz te łapy z mojej nogi!" paragraph="Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta in at enim sed. Facere accusantium impedit dolores quas debitis." /> : null}
       </div>
     );
