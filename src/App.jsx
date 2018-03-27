@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Button, ProgressBar, Modal, CircleMenu } from './components';
+import circleMenuRandomData from './data/circleMenuRandomData';
 
 const MenuTriggerButton = styled(Button)`
   margin-top: 400px;
@@ -61,7 +62,7 @@ class App extends React.Component {
         <input type="text" onChange={this.handleChange} value={value} style={{ marginTop: 50 }} />
         <Button onClick={this.handleClick}>change Bar value and show Modal</Button>
         <MenuTriggerButton onClick={this.toggleCircleMenu}>menuTrigger</MenuTriggerButton>
-        {isCircleMenu ? <CircleMenu x={circleMenuPosition.x} y={circleMenuPosition.y} closeMenuHandler={this.toggleCircleMenu} /> : null}
+        {isCircleMenu ? <CircleMenu menuItems={circleMenuRandomData} x={circleMenuPosition.x} y={circleMenuPosition.y} closeMenuHandler={this.toggleCircleMenu} /> : null}
         {isModal ? <Modal closeTrigger={this.toggleModal} header='Lorem ipsum dolor sit amet consectetur adipisicing elit.' paragraph="Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta in at enim sed. Facere accusantium impedit dolores quas debitis." /> : null}
       </div>
     );
