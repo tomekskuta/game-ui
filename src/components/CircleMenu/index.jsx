@@ -53,7 +53,7 @@ export default class CircleMenu extends React.Component {
   }
 
   renderAngle(elementsQuantity, index) {
-    return 360 / elementsQuantity * (index + 1);
+    return 360 - 360 / elementsQuantity * (index + 1);
   }
 
   render() {
@@ -69,7 +69,7 @@ export default class CircleMenu extends React.Component {
         onAnimationEnd={isClosing ? closeMenuHandler : null}
       >
         <CloseButton onClick={this.closeClickHandle} menuSize={menuSize} />
-        {menuItems.map((item, index, array) => <CircleMenuItem angle={this.renderAngle(array.length, index)} key={index} >{item.name}</CircleMenuItem>)}
+        {menuItems.map((item, index, array) => <CircleMenuItem angle={this.renderAngle(array.length, index)} onClick={item.onClick} key={index} >{item.name}</CircleMenuItem>)}
       </CircleWrapper>
     );
   }

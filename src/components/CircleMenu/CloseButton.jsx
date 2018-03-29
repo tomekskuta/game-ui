@@ -19,10 +19,6 @@ const closeIconAnimation = direction => keyframes`
   }
 `;
 
-const closeIconMouseOutAnimation = keyframes`
-  100% { transform: scale(0, 0); }
-`;
-
 const StyledCloseButton = styled.div`
   border: solid 2px black;
   border-radius: 50%;
@@ -31,6 +27,7 @@ const StyledCloseButton = styled.div`
   cursor: pointer;
   display: flex;
   justify-content: center;
+  z-index: 2;
 
   :hover {
     animation: ${closeButtonAnimation} 1s;
@@ -63,11 +60,6 @@ const CloseIcon = styled.div`
       animation: ${closeIconAnimation('-')} 0.5s both;
     }
   }
-
-  /* ${StyledCloseButton}:not(:hover) & {
-    animation: ${closeIconMouseOutAnimation} 0.5;
-    opacity: 1;
-  } */
 `;
 
 const CloseButton = ({ menuSize, onClick }) => (
@@ -77,7 +69,7 @@ const CloseButton = ({ menuSize, onClick }) => (
 );
 
 CloseButton.propTypes = {
-  onCLick: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
 }
 
 export default CloseButton;

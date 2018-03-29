@@ -1,40 +1,58 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { keyframes, css } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
-const animation = (props) => keyframes`
-  from { 
-    transform: translate(0) rotate(${props.angle}deg);
+const rotateItems = angle => keyframes`
+  0% { left: 0; }
+  30% { 
+    left: -70px;
+    transform: rotate(0deg); 
   }
-  to { 
-    transform: translate(-70px) rotate(${props.angle}deg);
+  100% {
+    left: -70px;
+    transform: rotate(${angle}deg);
   }
+`;
+
+const rotateContent = angle => keyframes`
+  from { transform: rotate(${angle}deg); }
+  to { transform: rotate(-${angle + 720}deg); }
 `;
 
 const StyledItem = styled.div`
   position: absolute;
   width: 60px;
   height: 60px;
-  border: solid 2px black;
   border-radius: 50%;
-  transform-origin: 30px 30px;
-  transform: rotate(${props => props.angle}deg) translate(-70px);
-  /* animation: ${props => css`${animation} 1s forwards`}; */
+  z-index: 1;
+  transform-origin: 100px 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: ${props => `${rotateItems(props.angle)} 1s forwards`};
 `;
 
 const ItemContent = styled.div`
-  transform: rotate(-${props => props.angle}deg);
-  width: 60px;
-  height: 60px;
+  box-sizing: border-box;
+  width: inherit;
+  height: inherit;
+  border: solid 2px black;
   border-radius: 50%;
   line-height: 60px;
   background: #fff;
   text-align: center;
+  /* animation: ${props => `${rotateContent(props.angle)} 1.5s forwards`}; */
+  transform: rotate(-${props => props.angle}deg) scale(1, 1);
+  cursor: pointer;
+
+  :hover {
+    transform: rotate(-${props => props.angle}deg) scale(1.1, 1.1);
+  }
 `;
 
-const CircleMenuItem = ({ children, angle }) => (
+const CircleMenuItem = ({ children, angle, onClick }) => (
   <StyledItem angle={angle} >
-    <ItemContent angle={angle} >
+    <ItemContent angle={angle} onCLick={onClick} >
       {children}
     </ItemContent>
   </StyledItem>
@@ -43,6 +61,7 @@ const CircleMenuItem = ({ children, angle }) => (
 CircleMenuItem.propTypes = {
   children: PropTypes.string.isRequired,
   angle: PropTypes.number.isRequired,
+  onClick: PropTypes.func.isRequired,
 }
 
 export default CircleMenuItem;
