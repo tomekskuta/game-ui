@@ -3,20 +3,15 @@ import PropTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
 
 const rotateItems = angle => keyframes`
-  0% { left: 0; }
+  0% { top: 0; }
   30% { 
-    left: -70px;
+    top: -70px;
     transform: rotate(0deg); 
   }
   100% {
-    left: -70px;
+    top: -70px;
     transform: rotate(${angle}deg);
   }
-`;
-
-const rotateContent = angle => keyframes`
-  from { transform: rotate(${angle}deg); }
-  to { transform: rotate(-${angle + 720}deg); }
 `;
 
 const StyledItem = styled.div`
@@ -25,12 +20,17 @@ const StyledItem = styled.div`
   height: 60px;
   border-radius: 50%;
   z-index: 1;
-  transform-origin: 100px 30px;
+  transform-origin: 30px 100px;
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
   animation: ${props => `${rotateItems(props.angle)} 1s forwards`};
 `;
+
+StyledItem.propTypes = {
+  angle: PropTypes.number.isRequired,
+}
 
 const ItemContent = styled.div`
   box-sizing: border-box;
@@ -41,27 +41,42 @@ const ItemContent = styled.div`
   line-height: 60px;
   background: #fff;
   text-align: center;
-  /* animation: ${props => `${rotateContent(props.angle)} 1.5s forwards`}; */
-  transform: rotate(-${props => props.angle}deg) scale(1, 1);
+  transform: ${props => `rotate(-${props.angle}deg) scale(${props.isSubMenu ? '1.1, 1.1' : '1, 1'})`};
   cursor: pointer;
 
   :hover {
     transform: rotate(-${props => props.angle}deg) scale(1.1, 1.1);
   }
+
+  :active {
+    transform: rotate(-${props => props.angle}deg) scale(1, 1);
+  }
 `;
 
-const CircleMenuItem = ({ children, angle, onClick }) => (
+ItemContent.propTypes = {
+  angle: PropTypes.number.isRequired,
+  isSubMenu: PropTypes.bool.isRequired,
+}
+
+const CircleMenuItem = ({ children, angle, onClick, isSubMenu, subMenu }) => (
   <StyledItem angle={angle} >
-    <ItemContent angle={angle} onCLick={onClick} >
+    <ItemContent angle={angle} onClick={onClick} isSubMenu={isSubMenu} >
       {children}
     </ItemContent>
+    {subMenu}
   </StyledItem>
 );
+
+CircleMenuItem.defaultProps = {
+  subMenu: null,
+}
 
 CircleMenuItem.propTypes = {
   children: PropTypes.string.isRequired,
   angle: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,
+  isSubMenu: PropTypes.bool.isRequired,
+  subMenu: PropTypes.array,
 }
 
 export default CircleMenuItem;

@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
 
-const closeButtonSize = 60;
+const centralButtonSize = 60;
 
-const closeButtonAnimation = keyframes`
-  100% { transform: rotate(360deg) }
+const centralButtonAnimation = keyframes`
+  100% { transform: rotate(180deg) }
 `;
 
 const closeIconAnimation = direction => keyframes`
@@ -19,25 +19,24 @@ const closeIconAnimation = direction => keyframes`
   }
 `;
 
-const StyledCloseButton = styled.div`
+const StyledCentralButton = styled.div`
   border: solid 2px black;
   border-radius: 50%;
   background: #fff;
-  width: ${closeButtonSize}px;
+  width: ${centralButtonSize}px;
   cursor: pointer;
   display: flex;
   justify-content: center;
   z-index: 2;
-
-  :hover {
-    animation: ${closeButtonAnimation} 1s;
-  }
+  align-items: center;
 `;
 
 const CloseIcon = styled.div`
+  position: absolute;
   opacity: 0;
   display: flex;
   align-items: center;
+  transition: opacity 0.5s;
 
   :before, 
   :after {
@@ -47,8 +46,9 @@ const CloseIcon = styled.div`
     background: #000;
   }
 
-  ${StyledCloseButton}:hover & {
+  ${StyledCentralButton}:hover & {
     opacity:1;
+    animation: ${centralButtonAnimation} 1s;
     
     :before {
       left: 1px;
@@ -62,14 +62,29 @@ const CloseIcon = styled.div`
   }
 `;
 
-const CloseButton = ({ menuSize, onClick }) => (
-  <StyledCloseButton onClick={onClick}>
+const Image = styled.img`
+  position: absolute;
+  opacity: 1;
+  height: 60%;
+  width: auto;
+  transition: opacity 0.5s;
+  align-self: center;
+
+  ${StyledCentralButton}:hover & {
+    opacity: 0;
+  }
+`;
+
+const CentralButton = ({ menuSize, onClick, img }) => (
+  <StyledCentralButton onClick={onClick}>
     <CloseIcon />
-  </StyledCloseButton>
+    <Image src={img} />
+  </StyledCentralButton>
 );
 
-CloseButton.propTypes = {
+CentralButton.propTypes = {
   onClick: PropTypes.func.isRequired,
+  img: PropTypes.string.isRequired,
 }
 
-export default CloseButton;
+export default CentralButton;
