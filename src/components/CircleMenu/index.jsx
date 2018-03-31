@@ -43,6 +43,8 @@ export default class CircleMenu extends React.Component {
     this.renderAngle = this.renderAngle.bind(this);
     this.setSubMenuFor = this.setSubMenuFor.bind(this);
     this.itemMenuHandler = this.itemMenuHandler.bind(this);
+    this.closeMenuEventListener = this.closeMenuEventListener.bind(this);
+    this.closeMenuEventCondition = this.closeMenuEventCondition.bind(this);
   }
 
   closeClickHandle() {
@@ -62,17 +64,33 @@ export default class CircleMenu extends React.Component {
     item.onClick();
   }
 
+  closeMenuEventCondition(event) {
+    const parent = document.getElementById('parent');
+    if (!parent.contains(event.target)) {
+      this.closeClickHandle();
+    }
+  }
+  
+  closeMenuEventListener() {
+    window.addEventListener('click', this.closeMenuEventCondition);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('click', this.closeMenuEventCondition);
+  }
+
   render() {
     const { x, y, closeMenuHandler, menuItems, centralImg } = this.props;
     const { isClosing, subMenu } = this.state;
 
     return (
-      <CircleWrapper 
+      <CircleWrapper
+        id="parent"
         x={x}
         y={y}
         animation={isClosing ? menuAnimationClose : menuAnimationOpen}
         animationDuration={isClosing ? 0.2 : 0.5}
-        onAnimationEnd={isClosing ? closeMenuHandler : null}
+        onAnimationEnd={isClosing ? closeMenuHandler : this.closeMenuEventListener}
       >
         <CentralButton onClick={this.closeClickHandle} img={centralImg} />
         {menuItems.map((item, index, array) => <CircleMenuItem 
