@@ -29,6 +29,7 @@ const ModalContent = styled.div`
   border: 1px solid black;
   border-radius: 5px;
   padding: 30px;
+  background: #fff;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
   animation: ${props => props.animation} 0.5s;
 `;
