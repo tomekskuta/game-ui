@@ -17,8 +17,7 @@ export default class CircleMenu extends React.Component {
     this.closeClickHandle = this.closeClickHandle.bind(this);
     this.renderAngle = this.renderAngle.bind(this);
     this.setSubMenuFor = this.setSubMenuFor.bind(this);
-    this.itemMenuHandler = this.itemMenuHandler.bind(this);
-    this.itemSubMenuHandler = this.itemSubMenuHandler.bind(this);
+    this.itemMenuClickHandler = this.itemMenuClickHandler.bind(this);
     this.closeMenuEventListener = this.closeMenuEventListener.bind(this);
     this.closeMenuEventCondition = this.closeMenuEventCondition.bind(this);
   }
@@ -35,20 +34,13 @@ export default class CircleMenu extends React.Component {
     this.setState({ subMenu: itemName });
   }
 
-  itemMenuHandler(item) {
+  itemMenuClickHandler(item) {
     item.action();
     if (item.shouldCloseAfterClick) {
       this.closeClickHandle();
     }
     if (item.subMenu) {
       this.setSubMenuFor(item.name);
-    }
-  }
-
-  itemSubMenuHandler(subItem) {
-    subItem.action();
-    if (subItem.shouldCloseAfterClick) {
-      this.closeClickHandle();
     }
   }
 
@@ -82,7 +74,7 @@ export default class CircleMenu extends React.Component {
         <CentralButton onClick={this.closeClickHandle} img={centralImg} />
         {menuItems.map((item, index, array) => <CircleMenuItem 
           angle={this.renderAngle(array.length, index)}
-          onClick={() => this.itemMenuHandler(item)}
+          onClick={() => this.itemMenuClickHandler(item)}
           key={index}
           isSubMenu={subMenu}
           subMenu={subMenu === item.name 
@@ -92,7 +84,7 @@ export default class CircleMenu extends React.Component {
                 index={subIndex}
                 angle={this.renderAngle(array.length, index)}
                 subMenuLength={subArray.length}
-                onClick={() => this.itemSubMenuHandler(subItem)}
+                onClick={() => this.itemMenuClickHandler(subItem)}
               >
                 {subItem.name}
               </SubMenuItem>
