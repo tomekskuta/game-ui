@@ -19,13 +19,14 @@ const StyledItem = styled.div`
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  z-index: 1;
+  z-index: 100;
   transform-origin: 30px 100px;
   display: flex;
   justify-content: center;
   align-items: center;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  animation: ${props => `${rotateItems(props.angle)} 1s forwards`};
+  background: #fff;
+  animation: ${props => `${rotateItems(props.angle)} 0.7s forwards`};
 `;
 
 StyledItem.propTypes = {
@@ -41,8 +42,10 @@ const ItemContent = styled.div`
   line-height: 60px;
   background: #fff;
   text-align: center;
-  transform: ${props => `rotate(-${props.angle}deg) scale(${props.isSubMenu ? '1.1, 1.1' : '1, 1'})`};
+  transform: ${props => `rotate(-${props.angle}deg) scale(${props.isSubMenu && props.subMenu ? '1.1, 1.1' : '1, 1'})`};
   cursor: pointer;
+  opacity: ${props => !props.isSubMenu || props.subMenu  ? 1 : 0.5};
+  transition: opacity 0.5s;
 
   :hover {
     transform: rotate(-${props => props.angle}deg) scale(1.1, 1.1);
@@ -55,12 +58,13 @@ const ItemContent = styled.div`
 
 ItemContent.propTypes = {
   angle: PropTypes.number.isRequired,
-  isSubMenu: PropTypes.bool.isRequired,
+  isSubMenu: PropTypes.string.isRequired,
+  subMenu: PropTypes.array,
 }
 
 const CircleMenuItem = ({ children, angle, onClick, isSubMenu, subMenu }) => (
   <StyledItem angle={angle} >
-    <ItemContent angle={angle} onClick={onClick} isSubMenu={isSubMenu} >
+    <ItemContent angle={angle} onClick={onClick} isSubMenu={isSubMenu} subMenu={subMenu} >
       {children}
     </ItemContent>
     {subMenu}
@@ -75,7 +79,7 @@ CircleMenuItem.propTypes = {
   children: PropTypes.string.isRequired,
   angle: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,
-  isSubMenu: PropTypes.bool.isRequired,
+  isSubMenu: PropTypes.string.isRequired,
   subMenu: PropTypes.array,
 }
 

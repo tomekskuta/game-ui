@@ -27,7 +27,7 @@ const StyledCentralButton = styled.div`
   cursor: pointer;
   display: flex;
   justify-content: center;
-  z-index: 2;
+  z-index: 1000;
   align-items: center;
 `;
 

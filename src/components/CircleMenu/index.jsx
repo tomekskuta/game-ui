@@ -18,6 +18,7 @@ export default class CircleMenu extends React.Component {
     this.renderAngle = this.renderAngle.bind(this);
     this.setSubMenuFor = this.setSubMenuFor.bind(this);
     this.itemMenuHandler = this.itemMenuHandler.bind(this);
+    this.itemSubMenuHandler = this.itemSubMenuHandler.bind(this);
     this.closeMenuEventListener = this.closeMenuEventListener.bind(this);
     this.closeMenuEventCondition = this.closeMenuEventCondition.bind(this);
   }
@@ -27,7 +28,7 @@ export default class CircleMenu extends React.Component {
   }
 
   renderAngle(elementsQuantity, index) {
-    return 360 - 360 / elementsQuantity * (index + 1);
+    return 360 / elementsQuantity * index;
   }
 
   setSubMenuFor(itemName) {
@@ -35,8 +36,20 @@ export default class CircleMenu extends React.Component {
   }
 
   itemMenuHandler(item) {
-    this.setSubMenuFor(item.name);
-    item.onClick();
+    item.action();
+    if (item.shouldCloseAfterClick) {
+      this.closeClickHandle();
+    }
+    if (item.subMenu) {
+      this.setSubMenuFor(item.name);
+    }
+  }
+
+  itemSubMenuHandler(subItem) {
+    subItem.action();
+    if (subItem.shouldCloseAfterClick) {
+      this.closeClickHandle();
+    }
   }
 
   closeMenuEventCondition(event) {
@@ -71,8 +84,21 @@ export default class CircleMenu extends React.Component {
           angle={this.renderAngle(array.length, index)}
           onClick={() => this.itemMenuHandler(item)}
           key={index}
-          isSubMenu={subMenu === item.name}
-          subMenu={subMenu === item.name ? item.subMenu.map((subItem, subIndex) => <SubMenuItem key={subIndex} >{subItem}</SubMenuItem>) : null}
+          isSubMenu={subMenu}
+          subMenu={subMenu === item.name 
+            ? item.subMenu.map((subItem, subIndex, subArray) => (
+              <SubMenuItem
+                key={subIndex}
+                index={subIndex}
+                angle={this.renderAngle(array.length, index)}
+                subMenuLength={subArray.length}
+                onClick={() => this.itemSubMenuHandler(subItem)}
+              >
+                {subItem.name}
+              </SubMenuItem>
+            )) 
+            : null
+          }
         >
           {item.name}
         </CircleMenuItem>)}
