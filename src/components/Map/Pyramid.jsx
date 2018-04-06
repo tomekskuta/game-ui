@@ -14,6 +14,7 @@ const Base = styled.div`
   height: 100px;
   width: 100px;
   color: ${colors.orange};
+  transform-style: preserve-3d;
 `;
 
 const Triangle = styled.div`
