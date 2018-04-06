@@ -12,25 +12,25 @@ const MapWrapper = styled.div`
   perspective-origin: 50% 50%;
 `;
 
-const anim = keyframes`
-  from { transform: rotate3d(0, 0, 0, 90deg); }
-  to { transform: rotate3d(0.7, -0.5, 0.5, 90deg); }
-`;
-
 const Map = styled.div`
   border: solid 2px black;
   width: 800px;
   height: 800px;
   display: flex;
   flex-wrap: wrap;
-  animation: ${anim} 2s forwards;
-  /* transform: rotate3d(1, -0.5, 0.5, 90deg); */
+  transform: ${props => `rotate3d(${props.x}, ${props.y}, ${props.z}, 90deg) scale(0.8, 0.8)`};
   transform-style: preserve-3d;
 `;
 
-const MapContainer = ({ children }) => (
+Map.propTypes = {
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
+  z: PropTypes.number.isRequired,
+}
+
+const MapContainer = ({ children, x, y, z }) => (
   <MapWrapper>
-    <Map>
+    <Map x={x} y={y} z={z} >
       {children}
     </Map>
   </MapWrapper>
@@ -38,6 +38,9 @@ const MapContainer = ({ children }) => (
 
 MapContainer.propTypes ={
   children: PropTypes.array.isRequired,
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
+  z: PropTypes.number.isRequired,
 }
 
 export default MapContainer;

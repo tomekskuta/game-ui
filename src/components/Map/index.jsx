@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import MapContainer from './MapContainer';
 import Pyramid from './Pyramid';
@@ -10,10 +11,10 @@ export default class Map extends React.Component {
       isClicked: false,
     }
 
-    this.renderDiv = this.renderDiv.bind(this);
+    this.renderFields = this.renderFields.bind(this);
   }
 
-  renderDiv(howMany) {
+  renderFields(howMany) {
     let components = [];
     for (let i = 0; i < howMany; i++) {
       components = [...components, i]
@@ -22,10 +23,18 @@ export default class Map extends React.Component {
   }
 
   render() {
+    const { x, y, z } = this.props;
+
     return (
-      <MapContainer>
-        {this.renderDiv(64).map(item => <Pyramid key={item} />)}
+      <MapContainer x={x} y={y} z={z} >
+        {this.renderFields(64).map(item => <Pyramid key={item} />)}
       </MapContainer>
     )
   }
+}
+
+Map.propTypes ={
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
+  z: PropTypes.number.isRequired,
 }
