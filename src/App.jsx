@@ -4,23 +4,18 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { Button } from './components';
 
 import SingleComponents from './layouts/examples/SingleComponents';
+import MapExample from './layouts/examples/Map';
 
-// import { circleMenuRandomData1, circleMenuRandomData2 } from './data/circleMenuRandomData';
+const App = () => (
+  <Router>
+    <div>
+      <Link to="/" ><Button>Single Components example</Button></Link>
+      <Link to="/map-example" ><Button>Map example</Button></Link>
 
-// import castleImg from './data/pictures/castle.png';
-
-class App extends React.Component {
-  render() {
-    return (
-    <Router>
-      <div>
-        <Button><Link to="/single-components" >Single Components example</Link></Button>
-
-        <Route path="/single-components" component={SingleComponents} />
-      </div>
-    </Router>
-    )
-  }
-}
+      <Route exact path="/" component={SingleComponents} />
+      <Route path="/map-example" component={MapExample} />
+    </div>
+  </Router>
+)
 
 export default App;
